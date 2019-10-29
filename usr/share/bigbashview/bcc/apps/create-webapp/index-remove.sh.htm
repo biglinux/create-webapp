@@ -1,0 +1,112 @@
+#!/bin/bash
+#Copy to USB Key Tool Using bigbashview
+
+#export TEXTDOMAINDIR="/usr/share/locale"
+#export TEXTDOMAIN=flash-javaws-widevine-fonts
+
+# Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
+# That's include jquery and materialize / Isso inclui o jquery e o materialize
+# http://materializecss.com/
+. /usr/share/bigbashview/bcc/shell/base.sh
+
+
+#Title/Description variables
+bcc_title=$"Remover BigLinux WebApp"
+bcc_description=$"Remove WebApp personalizado"
+# To disable logo use: bcc_logo="no"
+bcc_logo="logo-remove-48.png"
+
+# About variables
+# To disable about use: bcc_about="no"
+bcc_about="yes"
+bcc_about_license=$"GPL v2 or greater"
+bcc_about_by=$"Bruno Gonçalves"
+bcc_about_release_date=$"01/08/2019"
+bcc_about_url_code=$"https://github.com/biglinux"
+bcc_about_url_project=$"https://www.biglinux.com.br"
+
+# Print header in screen
+bcc_header
+
+###############
+# Start Content
+
+echo '<style>.desk { color:black; } </style>'
+
+DESKTOP=$(ls $HOME/.local/share/applications/*.desktop | grep "webapp-biglinux" | sort )
+
+ALL=$"Todos WebApps personalizados"
+
+if [ "$DESKTOP" != "" ]; then
+
+	echo '<form action="webapp-remove.sh.htm" method="get">'
+	echo '<big><b>' $"Selecione o WebApp que deseja remover:" '</b></big><br><br>'
+	echo '<b><select onchange="deskChange(event)">'	
+		echo '<option value="'"$ALL"'" selected>' $"Remover todos" '</option>' 
+
+			for i in $DESKTOP; do				
+				DESKNAME=$(cat $i | grep "Name" | awk -F'=' '{print $2}')
+				DESKURL=$(cat $i | grep "Exec" | awk -F'--app=' '{print $NF}') 
+				DESKICON=$(cat $i | grep "Icon" | awk -F'=' '{print $2}' | awk -F'/' '{print $NF}') 
+				if [ "$DESKICON" = "preferences-web-browser-shortcuts" ]; then
+					DESKICON=$"Ícone padrão"
+				fi				
+				echo '<option value="'"$DESKURL --- $DESKICON"'">'"$DESKNAME"'</option>' 				
+			done	
+			
+	echo "</select></b>"
+	echo '<script type="text/javascript">	
+					function deskChange(e) { 	
+						document.getElementById("desk").value = e.target.value
+					}	
+			</script>'				
+	echo '<b>' $"Detalhes do WebApp:" '</b><br><br>'				
+	echo '<b><input name="desktop_file" id="desk" type="text" value="'"$ALL"'"/></b><br/><br/>'  
+
+	echo $"*** A opção remover tudo também exclui a categoria Web apps Custom ***"
+
+	###################
+	# Close content div
+	echo '</div>'
+
+	##############
+	# Start footer
+	echo '<div id="bcc_footer">'
+	      echo '<div class="center-align">'
+			echo '<a href="index.sh.htm" class="waves-effect waves-light btn blue-grey lighten-1"><img src=back.png>'$"Voltar"'</a>'
+	        echo '<a href="/usr/share/bigbashview/close.sh" class="waves-effect waves-light btn blue-grey lighten-1"><img src=cancel.png>'$"Cancelar"'</a>'
+	        echo '<button class="btn waves-effect waves-light blue-grey lighten-1" type="submit" name="action"><img src=ok.png>'$"Remover"'</button>'
+	      echo '</div>'
+	echo '</div>'
+	echo '</form>'	
+
+	#########
+	# The end
+	echo '</body>'
+	
+else
+    echo '<b>' $"Nenhum BigLinux WebApp personalizado encontrado!" '</b><br><br>'
+    echo $"Se deseja criar <a href='index-create.sh.htm'>clique aqui<a>"
+
+    ###################
+	# Close content div
+	echo '</div>'
+
+	##############
+	# Start footer
+	echo '<div id="bcc_footer">'
+	      echo '<div class="center-align">'
+			echo '<a href="index.sh.htm" class="waves-effect waves-light btn blue-grey lighten-1"><img src=back.png>'$"Voltar"'</a>'
+	        echo '<a href="/usr/share/bigbashview/close.sh" class="waves-effect waves-light btn blue-grey lighten-1"><img src=cancel.png>'$"Cancelar"'</a>'
+	      echo '</div>'
+	echo '</div>'
+
+	#########
+	# The end
+	echo '</body>'
+fi
+
+
+
+
+

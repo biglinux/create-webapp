@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /usr/share/bigbashview/bcc/apps/create-webapp
+bigbashview index.sh.htm -i favicon.ico

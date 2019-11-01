@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#export TEXTDOMAINDIR="/usr/share/locale"
+#export TEXTDOMAIN=flash-javaws-widevine-fonts
+
+# Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
+# That's include jquery and materialize / Isso inclui o jquery e o materialize
+# http://materializecss.com/
+. /usr/share/bigbashview/bcc/shell/base.sh
+
+
+#Title/Description variables
+bcc_title=$"Remover BigLinux WebApp"
+bcc_description=$"Remove WebApp personalizado"
+# To disable logo use: bcc_logo="no"
+bcc_logo="logo-remove-48.png"
+
+# About variables
+# To disable about use: bcc_about="no"
+bcc_about="yes"
+bcc_about_license=$"GPL v2 or greater"
+bcc_about_by=$"Bruno Gonçalves"
+bcc_about_release_date=$"15/07/2019"
+bcc_about_url_code=$"https://github.com/biglinux/flash-javaws-widevine-fonts"
+bcc_about_url_project=$"https://www.biglinux.com.br"
+
+# Print header in screen
+bcc_header
+
+###############
+# Start Content
+
+if [ "$(echo "$p_desktop_file" | egrep -i "todos|all" )" != "" ]; then
+	$(pwd)/webapp-remove.sh "all"
+else
+	VALUE_FILE=$(echo "$p_desktop_file" | awk -F ":" '{print $2":"$3}' | awk -F "-" '{print $1}' )
+	DESK_FILE=$(grep -iRl $VALUE_FILE $HOME/.local/share/applications)
+	$(pwd)/webapp-remove.sh "$DESK_FILE"
+fi
+
+
+###################
+# Close content div
+echo '</div>'
+echo '</body>'

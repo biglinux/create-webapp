@@ -1,5 +1,4 @@
 #!/bin/bash
-#Copy to USB Key Tool Using bigbashview
 
 #export TEXTDOMAINDIR="/usr/share/locale"
 #export TEXTDOMAIN=flash-javaws-widevine-fonts
@@ -40,43 +39,29 @@ ALL=$"Todos WebApps personalizados"
 if [ "$DESKTOP" != "" ]; then
 
 	echo '<form action="webapp-remove.sh.htm" method="get">'
-
 	echo '<big><b>' $"Selecione o WebApp que deseja remover:" '</b></big><br><br>'
+	echo '<b><select onchange="deskChange(event)">'	
+		echo '<option value="'"$ALL"'" selected>' $"Remover todos" '</option>' 
 
-	echo '<b><select onchange="deskChange(event)">'
-	
-		echo '<option value="' "$ALL"  '" selected>' $"Remover tudo" '</option>' 
-		
-			for i in $DESKTOP; do	
-			
+			for i in $DESKTOP; do				
 				DESKNAME=$(cat $i | grep "Name" | awk -F'=' '{print $2}')
-				DESKURL=$(cat $i | grep "Exec" | awk -F'=' '{print $NF}') 
+				DESKURL=$(cat $i | grep "Exec" | awk -F'--app=' '{print $NF}') 
 				DESKICON=$(cat $i | grep "Icon" | awk -F'=' '{print $2}' | awk -F'/' '{print $NF}') 
 				if [ "$DESKICON" = "preferences-web-browser-shortcuts" ]; then
-					DESKICON=$"Padrão"
+					DESKICON=$"Ícone padrão"
 				fi				
-				
-				echo '<option value="URL: ' "$DESKURL"  '  -  ICON: ' "$DESKICON" '">' "$DESKNAME" '</option>' 
-				
+				echo '<option value="'"$DESKURL --- $DESKICON"'">'"$DESKNAME"'</option>' 				
 			done	
 			
 	echo "</select></b>"
-	
-	
-
 	echo '<script type="text/javascript">	
 					function deskChange(e) { 	
 						document.getElementById("desk").value = e.target.value
 					}	
-			</script>'
-			
-			
-				
-	echo '<b>' $"Detalhes do WebApp:" '</b><br><br>'		
-	
-				
-	echo '<b><input name="desktop_file" id="desk" type="text" value="'  "$ALL"  '"/></b><br/><br/>'  
-	
+			</script>'				
+	echo '<b>' $"Detalhes do WebApp:" '</b><br><br>'				
+	echo '<b><input name="desktop_file" id="desk" type="text" value="'"$ALL"'"/></b><br/><br/>'  
+
 	echo $"*** A opção remover tudo também exclui a categoria Web apps Custom ***"
 
 	###################

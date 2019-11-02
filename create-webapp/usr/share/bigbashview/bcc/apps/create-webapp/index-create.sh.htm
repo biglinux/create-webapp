@@ -30,18 +30,26 @@ bcc_header
 ###############
 # Start Content
 
+if [ "$p_file" = "change" ]; then
+	cd ~
+	iconfile=$(yad --center --title $"Selecione o ícone" \
+		   --window-icon folder --width 800 \
+		   --height 600 --file --add-preview \
+		   --image-filter=Icon)
+fi
+
 echo '<form action="webapp-install.sh.htm" method="get">'
 
 echo '<b>' $"INSIRA O ÍCONE, NOME E O URL QUE DESEJA CRIAR O WEBAPP:" '</b><br><br>'
 
-if [ "$1" != "" ]; then
+if [ "$iconfile" != "" ]; then
 	echo '<div class="row"><b class="col s2"><br>' $"ÍCONE:" '</b>			
-			<input class="col s7" type="text" name="icon" value="'"$1"'" readonly="readonly"/>
-			<a class="col s3 waves-effect waves-light btn blue-grey lighten-1" href="icon.sh">' $"Alterar..." '</a></div>'
+			<input class="col s7" type="text" name="icon" value="'"$iconfile"'" readonly="readonly"/>
+			<a class="col s3 waves-effect waves-light btn blue-grey lighten-1" href="index-create.sh.htm?file=change">' $"Alterar..." '</a></div>'
 else
 	echo '<div class="row"><b class="col s2"><br>' $"ÍCONE:" '</b>			
-			<input class="col s7" disabled type="text" value="'$"Nenhum arquivo de ícone foi carregado!"'"/>
-			<a class="col s3 waves-effect waves-light btn blue-grey lighten-1" href="icon.sh">' $"Carregar..." '</a></div>'
+			<input class="col s7" disabled type="text" value="'$"Nenhum carregado... Ícone padrão será usado!"'"/>
+			<a class="col s3 waves-effect waves-light btn blue-grey lighten-1" href="index-create.sh.htm?file=change">' $"Carregar..." '</a></div>'
 fi
 
 echo '<div class="row"><b class="col s2"><br>' $"NOME:" '</b>

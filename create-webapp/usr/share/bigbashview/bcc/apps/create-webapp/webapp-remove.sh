@@ -9,16 +9,18 @@ if [ "$1" == "all" ]; then
 
 	echo "<META http-equiv=\"refresh\" content=\"0;URL=index.sh.htm\">"
 	exit
-else
+else	
 	DESK=$(echo "$1" | awk -F "/" '{print $NF}')	
-	sed -i '/<Filename>'"$DESK"'</Filename>/d' $HOME/.config/menus/applications-merged/custom-applications.menu
+	
+	sed -i "/$DESK/d" $HOME/.config/menus/applications-merged/custom-applications.menu
 	rm "$1"
+
 
 	kdialog --msgbox $"O WebApp personalizado foi removido com sucesso!\nCaso ainda estiver no menu refaça login no sistema!"	
 	kdialog --yesno $"Você deseja remover outro WebApp personalizado?"
 
 	if [ "$?" != "0" ]; then	
-		echo "<META http-equiv=\"refresh\" content=\"0;URL=/usr/share/bigbashview/close.sh\">"
+		echo "<META http-equiv=\"refresh\" content=\"0;URL=index.sh.htm\">"
 		exit
 	else
 		echo "<META http-equiv=\"refresh\" content=\"0;URL=index-remove.sh.htm\">"

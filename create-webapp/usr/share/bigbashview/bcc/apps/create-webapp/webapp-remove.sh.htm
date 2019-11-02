@@ -33,8 +33,9 @@ bcc_header
 if [ "$(echo "$p_desktop_file" | egrep -i "todos|all" )" != "" ]; then
 	$(pwd)/webapp-remove.sh "all"
 else
-	VALUE_FILE=$(echo "$p_desktop_file" | awk -F ":" '{print $2":"$3}' | awk -F "-" '{print $1}' )
-	DESK_FILE=$(grep -iRl $VALUE_FILE $HOME/.local/share/applications)
+	VALUE_FILE=$(echo "$p_desktop_file" | awk -F' --- ' '{print $1}')
+	DESK_FILE=$(grep -Rl "$VALUE_FILE$" $HOME/.local/share/applications)
+
 	$(pwd)/webapp-remove.sh "$DESK_FILE"
 fi
 

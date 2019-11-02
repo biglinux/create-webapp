@@ -1,9 +1,0 @@
-[Desktop Entry]
-Categories=Settings;
-Exec=create-webapp
-Icon=/usr/share/bigbashview/bcc/apps/create-webapp/logo.png
-Name[pt_BR]=BigLinux WebApp
-Name=BigLinux WebApp
-StartupNotify=true
-Terminal=false
-Type=Application

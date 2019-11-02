@@ -1,5 +1,5 @@
-dc05520acf81a294fec9c7348e018556  DEBIAN/control
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
+f31922b268285274fc018a6afad2b37d  DEBIAN/control
 475d0e6af4c3eac09d6b59bc4fb34397  usr/share/bigbashview/bcc/apps/create-webapp/index.sh.htm
 c30cd977ccb0d1eca5aeb970fef5b003  usr/share/bigbashview/bcc/apps/create-webapp/ok.png
 4f7d55e235f4a7b6438ac1f4dca16bd3  usr/share/bigbashview/bcc/apps/create-webapp/cancel.png

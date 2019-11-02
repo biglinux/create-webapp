@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NAMEDESK=$(echo "$1" | sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/' | tr '[:upper:]' '[:lower:]' | sed 's/\ /-/g')
+NAMEDESK=$(echo "$1" | sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚüÜçÇ/aAaAaAaAeEeEiIoOoOoOuUuUcC/' | tr '[:upper:]' '[:lower:]' | sed 's|\ |-|g;s|\/|-|g')
 
 if [ "$(echo "$2" | egrep "(http|https)://")" != "" ]; then
 	CUT_HTTP=$(echo "$2" | sed 's/https:\/\///;s/http:\/\///' | tr '/' '_' | sed 's/_/__/1;s/_$//;s/_$//')
@@ -45,12 +45,14 @@ Name=Web apps Custom
 Icon=preferences-web-browser-shortcuts" > $HOME/.local/share/desktop-directories/web-apps-custom.directory
 
 else 
-	if [ "$(grep $NAMEDESK $HOME/.config/menus/applications-merged/custom-applications.menu)" != "" ]; then
-		kdialog --sorry $"Ops! Esse WebApp já existe!"
+	if [ "$(grep -R "$2$" $HOME/.local/share/applications)" != "" -o \
+		 "$(grep "$NAMEDESK-webapp-biglinux.desktop" $HOME/.config/menus/applications-merged/custom-applications.menu)" != "" ]; then
+		 	
+		kdialog --sorry $"Ops...! Esse WebApp já existe!\nTente mudar o nome ou a url. "
 		echo "<META http-equiv=\"refresh\" content=\"0;URL=index-create.sh.htm\">"
 		exit
 	else
-		sed -i '10i \\t\t\t\t<Filename>'"$NAMEDESK"'-webapp-biglinux.desktop</Filename>' \
+		sed -i '9i \\t\t\t\t<Filename>'"$NAMEDESK"'-webapp-biglinux.desktop</Filename>' \
 		$HOME/.config/menus/applications-merged/custom-applications.menu
 	fi
 fi
@@ -70,22 +72,9 @@ kdialog --msgbox $"O WebApp personalizado foi criado com sucesso!\nCaso não est
 kdialog --yesno $"Você deseja criar outro WebApp personalizado?"
 
 if [ "$?" != "0" ]; then	
-	echo "<META http-equiv=\"refresh\" content=\"0;URL=/usr/share/bigbashview/close.sh\">"
+	echo "<META http-equiv=\"refresh\" content=\"0;URL=index.sh.htm\">"
 	exit
 else 
 	echo "<META http-equiv=\"refresh\" content=\"0;URL=index-create.sh.htm\">"
 	exit
 fi
-	
-
-
-
-
-
-
-
-
-
-
-
-

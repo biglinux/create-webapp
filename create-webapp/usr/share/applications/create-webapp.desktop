@@ -1,5 +1,5 @@
 [Desktop Entry]
-Categories=Settings;
+Categories=System;
 Exec=create-webapp
 Icon=/usr/share/bigbashview/bcc/apps/create-webapp/webapp.png
 Name[pt_BR]=Gerenciar Web Apps
